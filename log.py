@@ -69,6 +69,9 @@ while True:
 
         if event_type == 'ATTACH_TO_GATEWAY':
             metadata = entry['jsonPayload']['gateway']['id']
+
+        if entry['jsonPayload']['status'].get('code') != 0:
+            metadata = f"{metadata} ({entry['jsonPayload']['status'].get('description')} {entry['jsonPayload']['status'].get('message', '')})"
         
         entries.append({'timestamp_obj': dateutil.parser.parse(timestamp), 
                         'timestamp': timestamp, 
