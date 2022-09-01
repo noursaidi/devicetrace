@@ -7,5 +7,5 @@ View PUB/SUB Message log and store messages for given device ID's (will match AN
 `python3 trace.py PROJECT_ID gama2 AHU-1 `
 `python3 trace.py PROJECT_ID gama2 GAT-100,ACT-1 .`
 
-View GCP Logs for given device ID's (refreshed every 20 seconds, will match ANY device with the device ID)
+View GCP Logs for given device ID's (refreshes every 10 seconds to try and keep items in order, but not always possible. Will match any device with the given device ID)
 `python3 log.py daq1-273309 GAT-100,ACT-1`
