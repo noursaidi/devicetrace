@@ -38,7 +38,7 @@ def print_log(timestamp, registry_id, message_type):
 def callback(message: pubsub_v1.subscriber.message.Message) -> None:
   try:
     #print(f'message receieved {message.attributes["deviceId"]}')
-    if message.attributes['deviceId'] != target_device_id:
+    if message.attributes['deviceId'] not in target_device_id:
       message.ack()
       return
 
@@ -68,7 +68,7 @@ def callback(message: pubsub_v1.subscriber.message.Message) -> None:
 
 
 args = parse_command_line_args()
-target_device_id = args.device_id
+target_device_ids = args.device_id.split(',')
 trace_directory = args.directory
 
 if not os.path.isdir(trace_directory):
