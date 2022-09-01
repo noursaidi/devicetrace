@@ -47,7 +47,6 @@ def callback(message: pubsub_v1.subscriber.message.Message) -> None:
         message.ack()
         return
       message_type = "state"
-
     elif message.attributes['subType'] == 'config':
       message_type = "config"
     else:
