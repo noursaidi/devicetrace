@@ -38,7 +38,7 @@ def print_log(timestamp, registry_id, message_type):
 def callback(message: pubsub_v1.subscriber.message.Message) -> None:
   try:
     #print(f'message receieved {message.attributes["deviceId"]}')
-    if message.attributes['deviceId'] not in target_device_id:
+    if message.attributes['deviceId'] not in target_device_ids:
       message.ack()
       return
 
