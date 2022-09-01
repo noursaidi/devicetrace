@@ -87,6 +87,6 @@ while True:
     
     td = datetime.datetime.utcnow() - search_timestamp
     if td.total_seconds() > 300:
-        search_timestamp = datetime.timedelta(seconds=300 - td.total_seconds())
+        search_timestamp = search_timestamp + datetime.timedelta(seconds=300 - td.total_seconds())
     
     time.sleep(dt)
