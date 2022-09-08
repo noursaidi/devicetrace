@@ -23,8 +23,8 @@ project_id = args.project_id
 device_filter = ' OR '.join([f'labels.device_id={target}' for target in target_devices])
 
 dt = 10 # balance of speed and accuracy for ordering as some entries can be delayed by 10 seconds (or more!)
+search_window = 60
 search_timestamp = datetime.datetime.utcnow() - datetime.timedelta(seconds=5)
-next_timestamp = datetime.timedelta(seconds=dt)
 
 seen = []
 
@@ -88,9 +88,8 @@ while True:
       print(f"{entry['timestamp_obj']}  {entry['device_id']:<10} {entry['registry_id']:<15} {entry['event_type']} {entry['metadata']}")
 
     td = datetime.datetime.utcnow() - search_timestamp
-    if td.total_seconds() > 180:
-      # Use a 3 minute search window
-      search_timestamp = search_timestamp + datetime.timedelta(seconds=(300 - td.total_seconds()))
+    if td.total_seconds() > search_window:
+      search_timestamp = search_timestamp + datetime.timedelta(seconds=(search_window - td.total_seconds()))
   except subprocess.CalledProcessError as e :
     print(e)
     print('Ensure gcloud is authenticated and IAM permissions correct')
