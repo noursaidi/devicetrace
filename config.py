@@ -1,18 +1,8 @@
-# [START pubsub_v1_generated_Subscriber_StreamingPull_sync]
-
-from concurrent import futures
 import json
-from re import T
-import dateutil.parser
 import argparse
-import os
 import datetime
 from google.cloud import iot_v1
-from google.protobuf import field_mask_pb2 as gp_field_mask
-
-from google import auth
 from google.cloud import pubsub_v1
-
 
 def parse_command_line_args():
   parser = argparse.ArgumentParser()
@@ -51,22 +41,21 @@ config = json.dumps(config_json)
 client = iot_v1.DeviceManagerClient()
 
 device_path = client.device_path(project_id, cloud_region, registry_id, device_id)
-data = config.encode("utf-8")
+data = config.encode('utf-8')
 
 # Exception in error
 client.modify_cloud_to_device_config(
-    request={"name": device_path, "binary_data": data, "version_to_update": 0}
+    request={'name': device_path, 'binary_data': data, 'version_to_update': 0}
 )
 
-#publish 
 publisher = pubsub_v1.PublisherClient()
 topic_path = publisher.topic_path(project_id, topic_id)
 
 # When you publish a message, the client returns a future.
-future = publisher.publish( topic_path, 
-                            data, 
-                            deviceId = device_id, 
-                            deviceRegistryId = registry_id, 
-                            subType = "config", 
-                            subFolder = "update")
+future = publisher.publish( topic_path,
+                            data,
+                            deviceId = device_id,
+                            deviceRegistryId = registry_id,
+                            subType = 'config',
+                            subFolder = 'update')
 print(future.result())
