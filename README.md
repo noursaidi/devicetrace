@@ -1,8 +1,17 @@
 # devicetrace
 
+## Requirements
+- Python modules in `requirements.txt` installed
+- `gcloud` CLI installed and authenticated for both CLI and application default credentials (`gcloud auth login` and `gloud auth application-default login`) with IAM permissions for required **Pub/Sub Subscription**, **IoT Registry**, and **Cloud Logging**
+- Cloud logging enabled 
+
+## Usage
+
+### Config Updates
 Update device config (and publish to topic so it's in the traces)
 `python3 config.py PROJECT_ID AHU-1 ZZ-TRI-FECTA  us-central1 udmi_target config1.json`
 
+### Message Traces
 View PUB/SUB Message log and store messages for given device ID's (will match ANY device with the device ID)
 `python3 trace.py PROJECT_ID gama2 AHU-1 `
 `python3 trace.py PROJECT_ID gama2 GAT-100,ACT-1 .`
@@ -18,6 +27,7 @@ View PUB/SUB Message log and store messages for given device ID's (will match AN
 2022-09-01 14:04:05.312000+00:00  GAT-100    ZZ-TRI-FECTA    event_system
 ```
 
+### GCP Device Logs (Cloud Logging)
 View GCP Logs for given device ID's (refreshes every 10 seconds to try and keep items in order, but not always possible. Will match any device with the given device ID)
 `python3 log.py daq1-273309 GAT-100,ACT-1`
 
