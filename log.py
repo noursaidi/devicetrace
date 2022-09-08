@@ -5,7 +5,7 @@ import json
 import dateutil.parser
 import argparse
 
-SHELL_TEMPLATE = 'gcloud logging read "logName=projects/{}/logs/cloudiot.googleapis.com%2Fdevice_activity AND ({}) AND timestamp>=\\\"{}\\\"" --limit 1000 --format json'
+SHELL_TEMPLATE = 'gcloud logging read "logName=projects/{}/logs/cloudiot.googleapis.com%2Fdevice_activity AND ({}) AND timestamp>=\\\"{}\\\"" --limit 1000 --format json --project {}'
 TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%SZ" #timestamp >= "2016-11-29T23:00:00Z"
 
 def parse_command_line_args():
@@ -30,7 +30,7 @@ seen = []
 
 while True:
   try:
-    shell_command = SHELL_TEMPLATE.format(project_id, device_filter, search_timestamp.strftime(TIMESTAMP_FORMAT) )
+    shell_command = SHELL_TEMPLATE.format(project_id, device_filter, search_timestamp.strftime(TIMESTAMP_FORMAT), project_id)
     output = subprocess.run(shell_command, capture_output=True, shell=True, check=True)
 
     data = json.loads(output.stdout)
