@@ -91,6 +91,10 @@ while True:
     if td.total_seconds() > 180:
       # Use a 3 minute search window
       search_timestamp = search_timestamp + datetime.timedelta(seconds=(300 - td.total_seconds()))
+  except subprocess.CalledProcessError as e :
+    print(e)
+    print('Ensure gcloud is authenticated and IAM permissions correct')
+    exit()
   except Exception:
     pass
   finally:
